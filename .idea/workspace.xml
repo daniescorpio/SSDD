@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$/../client_configuration_service_application" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../direct_debit_service_application" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../iso20022" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../iso20022_component" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../payhub-bacs-emitter" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../payhub-bacs-inbound-processor" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../payments-registry" value="PREVIEW" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
