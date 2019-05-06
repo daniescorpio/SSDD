@@ -11,6 +11,8 @@ public class Agenda implements IRepository {
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
 
+    private int objId;
+
     private final String ipAdress = "localhost";
     private final int port = 4444;
 
@@ -27,6 +29,9 @@ public class Agenda implements IRepository {
             outputStream.writeUTF(request);
             outputStream.flush();
 
+            // Read data
+            this.objId = inputStream.readInt();
+
             // Close connection
             outputStream.close();
             socket.close();
@@ -38,7 +43,7 @@ public class Agenda implements IRepository {
     public void asociar(String s, int v) {
         // Connect to server and send codOp 2  to server
         // After that send the key s and the value v  to server
-        String request = "2".concat("-").concat(s).concat("-").concat(String.valueOf(v));
+        String request = String.valueOf(this.objId).concat("2").concat("-").concat(s).concat("-").concat(String.valueOf(v));
         try {
             // Open connection
             socket = new Socket("localhost", 4444);
@@ -60,7 +65,7 @@ public class Agenda implements IRepository {
         // Connect to server and send codOp 3 to server
         // After that send the key s to server
         // After that receive the value from server
-        String request = "3".concat("-").concat(s);
+        String request = String.valueOf(this.objId).concat("3").concat("-").concat(s);
         int responseValue = 0;
         try {
             // Open connection

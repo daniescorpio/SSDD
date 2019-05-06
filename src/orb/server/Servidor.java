@@ -6,15 +6,22 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Servidor {
 
     private static final int PORT = 4444;
 
+    private static int lastId = -1;
+
+    private Map<Integer, Agenda> agendas;
+
     public static void main(String[] args) {
         // Open ans wait for connections
         // Once client connected, receive codOp and execute the correspondent operation
-        Agenda agendaTelefonica = null;
+        Servidor server = new Servidor();
+
+        server.agendas = new HashMap<>();
 
         ServerSocket serverSocket;
         Socket socket;
@@ -42,17 +49,15 @@ public class Servidor {
                 responseMap.put("codOp", response.split("-")[0]);
                 System.out.println("Operation code received: " + responseMap.get("codOp"));
 
-                Servidor server = new Servidor();
-
                 switch (responseMap.get("codOp")) {
                     case "1":
-                        agendaTelefonica = server.createOperation();
+                        server.createOperation(outputStream);
                         break;
                     case "2":
                         server.asociateOperation(agendaTelefonica, response, responseMap);
                         break;
                     case "3":
-                        server.obtainOperation(agendaTelefonica, outputStream, response, responseMap);
+//                        server.obtainOperation(agendaTelefonica, outputStream, response, responseMap);
                         break;
                     default:
                         System.out.println("Unknown operation code received");
@@ -68,10 +73,16 @@ public class Servidor {
         }
     }
 
-    private Agenda createOperation() {
-        Agenda agendaTelefonica = new Agenda();
-        System.out.println("New object Agenda created");
-        return agendaTelefonica;
+    private void createOperation(DataOutputStream outputStream) {
+        Agenda agenda = new Agenda();
+        this.agendas.put(lastId++, agenda);
+        System.out.println("New object Agenda created with id: " + lastId);
+        try {
+            outputStream.writeInt(lastId);
+            System.out.println("Sending to client objId: " + lastId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void asociateOperation(Agenda agendaTelefonica, String response, HashMap<String, String> responseMap) {
@@ -82,8 +93,7 @@ public class Servidor {
         System.out.println("Value received: " + responseMap.get("value"));
 
         agendaTelefonica.asociar(responseMap.get("key"), Integer.parseInt(responseMap.get("value")));
-        System.out.println("Operation asociar executed with args: " +
-                responseMap.get("key") + ", " + responseMap.get("value"));
+        System.out.println("Operation asociar executed with args: " + responseMap.get("key") + ", " + responseMap.get("value"));
     }
 
     private void obtainOperation(Agenda agendaTelefonica, DataOutputStream outputStream, String response, HashMap<String, String> responseMap) throws IOException {
