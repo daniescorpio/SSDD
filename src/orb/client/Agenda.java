@@ -30,20 +30,23 @@ public class Agenda implements IRepository {
             outputStream.flush();
 
             // Read data
-            this.objId = inputStream.readInt();
+            objId = inputStream.readInt();
+            while (objId != -1) {
+                objId = inputStream.readInt();
+            }
 
             // Close connection
             outputStream.close();
             socket.close();
         } catch (IOException e) {
-            System.out.println("Error during connection");
         }
     }
 
     public void asociar(String s, int v) {
         // Connect to server and send codOp 2  to server
         // After that send the key s and the value v  to server
-        String request = String.valueOf(this.objId).concat("2").concat("-").concat(s).concat("-").concat(String.valueOf(v));
+        // Message structure codOp-objId-key-value
+        String request = "2".concat("-").concat(String.valueOf(this.objId)).concat("-").concat(s).concat("-").concat(String.valueOf(v));
         try {
             // Open connection
             socket = new Socket("localhost", 4444);
@@ -56,16 +59,15 @@ public class Agenda implements IRepository {
             // Close connection
             outputStream.close();
             socket.close();
-        } catch (IOException e) {
-            System.out.println("Error during connection");
-        }
+        } catch (IOException e) {}
     }
 
     public int obtener(String s) {
         // Connect to server and send codOp 3 to server
         // After that send the key s to server
         // After that receive the value from server
-        String request = String.valueOf(this.objId).concat("3").concat("-").concat(s);
+        // Message structure codOp-objId-key
+        String request = "3".concat("-").concat(String.valueOf(this.objId)).concat("-").concat(s);
         int responseValue = 0;
         try {
             // Open connection
@@ -86,9 +88,7 @@ public class Agenda implements IRepository {
             // Close connection
             outputStream.close();
             socket.close();
-        } catch (IOException e) {
-            System.out.println("Error during connection");
-        }
+        } catch (IOException e) {}
         return responseValue;
     }
 }

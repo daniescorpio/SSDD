@@ -9,7 +9,7 @@ public class ClienteAgendas {
         guiaClaves.asociar("Moodle", 23323);
         agendaTelefonica.asociar("Pepe", 644454456);
 
-//        System.out.println("Telefono Juan = " + agendaTelefonica.obtener("Juan"));
-//        System.out.println("Clave Moodle = " + guiaClaves.obtener("Moodle"));
+        System.out.println("Telefono Juan = " + agendaTelefonica.obtener("Juan"));
+        System.out.println("Clave Moodle = " + guiaClaves.obtener("Moodle"));
     }
 }
