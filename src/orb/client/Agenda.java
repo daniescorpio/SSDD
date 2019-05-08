@@ -18,7 +18,7 @@ public class Agenda implements IRepository {
 
     public Agenda() {
         // Connect to server and send codOp 1  to server
-        String request = "1";
+        Request request = new Request(1);
         try {
             // Open connection
             socket = new Socket(ipAdress, port);
@@ -26,7 +26,7 @@ public class Agenda implements IRepository {
             inputStream = new DataInputStream(socket.getInputStream());
 
             // Write data
-            outputStream.writeUTF(request);
+            outputStream.writeUTF(request.toRequestString());
             outputStream.flush();
 
             // Read data
@@ -46,14 +46,14 @@ public class Agenda implements IRepository {
         // Connect to server and send codOp 2  to server
         // After that send the key s and the value v  to server
         // Message structure codOp-objId-key-value
-        String request = "2".concat("-").concat(String.valueOf(this.objId)).concat("-").concat(s).concat("-").concat(String.valueOf(v));
+        Request request = new Request(2, this.objId, s, v);
         try {
             // Open connection
             socket = new Socket("localhost", 4444);
             outputStream = new DataOutputStream(socket.getOutputStream());
 
             // Write data
-            outputStream.writeUTF(request);
+            outputStream.writeUTF(request.toRequestString());
             outputStream.flush();
 
             // Close connection
@@ -67,7 +67,7 @@ public class Agenda implements IRepository {
         // After that send the key s to server
         // After that receive the value from server
         // Message structure codOp-objId-key
-        String request = "3".concat("-").concat(String.valueOf(this.objId)).concat("-").concat(s);
+        Request request = new Request(3, this.objId, s);
         int responseValue = 0;
         try {
             // Open connection
@@ -76,7 +76,7 @@ public class Agenda implements IRepository {
             inputStream = new DataInputStream(socket.getInputStream());
 
             // Write data
-            outputStream.writeUTF(request);
+            outputStream.writeUTF(request.toRequestString());
             outputStream.flush();
 
             // Read data
